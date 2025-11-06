@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Regression Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="app-header">
+        <h1>Linear Regression Calculator</h1>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+
+            <div class="input-panel">
+                <h2>1. Enter Your Data</h2>
+                <p>Paste your (x, y) data below, one pair per line (e.g., 1,2.5).</p>
+
+                <textarea id="data-input" rows="15" placeholder="1, 2.5
+2, 4.1
+3, 4.9
+4, 7.2
+5, 8.8"></textarea>
+
+                <button id="calculate-btn">
+                    <span class="btn-text">Calculate</span>
+                </button>
+            </div>
+
+            <div class="output-panel">
+                <h2>2. View Results</h2>
+
+                <div id="results-box" class="results-box">
+                </div>
+
+                <div class="chart-container">
+                    <div id="chart-placeholder" class="chart-placeholder">
+                        Your chart will appear here.
+                    </div>
+                    <canvas id="regression-chart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <section class="wrapper">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>
