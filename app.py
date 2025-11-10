@@ -48,5 +48,17 @@ def calculate_regression():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/graph')
+def graph():
+    return render_template('graph.html')
+
+@app.route('/implicit')
+def implicit():
+    return render_template('implicit.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
