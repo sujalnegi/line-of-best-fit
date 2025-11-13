@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Maker - Line of Best Fit</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bree+Serif&family=Titan+One&family=Unbounded:wght@200..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body{
+            background-color: #f4f7f6;
+            color: #333;
+            background-image: url("{{ url_for('static', filename='background-dark.jpg') }}");
+        }
+
+        .graph-container{
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .graph-container h2{
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .graph-layout{
+            display: flex;
+            gap: 20px;
+        }
+
+        .graph-sidebar{
+            flex-basis: 250px;
+            flex-shrink: 0;
+        }
+
+        .mode-selector{
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .mode-selector:hover{
+            background-color: #f9f9f9;
+            border-color: #3498db;
+        }
+
+        .mode-selector.active{
+            background-color: #eaf5fc;
+            border-color: #3498db;
+            box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+        }
+
+        .mode-selector h4{
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+
+        .mode-selector p{
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .graph-main{
+            flex-grow: 1;
+        }
+
+        #plotly-graph{
+            width: 100%;
+            height: 500px;
+        }
+
+        .hidden{
+            display: none;
+        }
+
+        .equation-maker{
+            padding: 20px;
+            background-color: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .input-group label{
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .input-group{
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .range-controls{
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .range-controls .input-group{
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .range-controls .input-group label{
+            flex-basis: 60px;
+        }
+
+        .input-group label{
+            flex-basis: 120px;
+        }
+
+        .input-group input{
+            flex-grow: 1;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #function-input{
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .equation-maker button{
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: background-color 0.2s ease;
+        }
+
+        .equation-maker button:hover{
+            background-color: #2980b9;
+        }
+
+        #clear-graph-btn{
+            background-color: #e74c3c;
+        }
+
+        #clear-graph-btn:hover{
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="nav-logo">Line of Best Fit</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('graph') }}" class="nav-link">Graph Maker</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('implicit') }}" class="nav-link">Implicit Grapher (fxy=0)</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('about') }}" class="nav-link">About Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container graph-container">
+        <h2>Graph Maker</h2>
+
+        <div class="graph-layout">
+
+            <div class="graph-sidebar">
+                <div class="mode-selector active" id="mode-linear">
+                    <h4>Linear Equation</h4>
+                    <p>y = mx + c</p>
+                </div>
+                <div class="mode-selector" id="mode-complex">
+                    <h4>Complex Function</h4>
+                    <p>f(x) = ...</p>
+                </div>
+            </div>
+
+            <div class="graph-main">
+                <div class="equation-maker">
+                    <div class="range-controls">
+                        <div class="input-group">
+                            <label for="x-min-input">X-Min:</label>
+                            <input type="number" id="x-min-input" placeholder="-20">
+                        </div>
+                        <div class="input-group">
+                            <label for="x-max-input">X-Max:</label>
+                            <input type="number" id="x-max-input" placeholder="20">
+                        </div>
+                    </div>
+                    <div id="linear-input-container">
+                        <h3>Draw a Line</h3>
+                        <div class="input-group">
+                            <label for="m-input">m (slope):</label>
+                            <input type="number" id="m-input" placeholder="e.g., 1.5">
+                        </div>
+                        <div class="input-group">
+                            <label for="c-input">c (y-intercept):</label>
+                            <input type="number" id="c-input" placeholder="e.g., 20">
+                        </div>
+                    </div>
+
+                    <div id="complex-input-container" class="hidden">
+                        <h3>Draw a Function</h3>
+                        <div class="input-group">
+                            <label for="function-input">f(x) =</label>
+                            <input type="text" id="function-input" value="sin(x)">
+                        </div>
+                        <p>Try: <b>cos(x)</b>, <b>log(x)</b>, <b>x^2</b>, etc.</p>
+                    </div>
+
+                    <button id="draw-btn">Plot Graph</button>
+                    <button id="clear-graph-btn">Clear</button>
+                </div>
+
+                <div id="plotly-graph"></div>
+                <button id="download-btn">Download as PNG</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.2/math.min.js"></script>
+
+    <script src="{{ url_for('static', filename='graph.js') }}"></script>
+</body>
+
+</html>
