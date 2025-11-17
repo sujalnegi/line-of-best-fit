@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Line of Best Fit</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <style>
+        .about-container {
+            position: relative; 
+            z-index: 10;
+            color: #eee;
+            padding-top: 30px;
+        }
+
+        .about-header {
+            text-align: center;
+            font-family: 'Momo Signature', cursive;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .about-description {
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-tile {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #eee;
+        }
+
+        .feature-tile:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #58a6ff;
+        }
+        .feature-tile .icon {
+            font-size: 2.5rem;
+            color: #58a6ff; 
+        }
+        .feature-tile h3 {
+            margin: 15px 0 10px 0;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        .feature-tile p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ccc;
+        }
+        
+
+        .navbar .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .material-symbols-outlined {
+            font-size: 1.25rem;
+        }
+        .nav-logo {
+             font-family: 'Momo Signature', cursive;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('home')}}" class="nav-logo">Line of Best Fit</a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{{ url_for('home')}}" class="nav-link">
+                        <span class="material-symbols-outlined">home</span>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('graph') }}" class="nav-link">
+                        <span class="material-symbols-outlined">show_chart</span>
+                        Graphs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('implicit') }}" class="nav-link">
+                        <span class="material-symbols-outlined">polyline</span>
+                        Complex Graphs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('about')}}" class="nav-link">
+                        <span class="material-symbols-outlined">info</span>
+                        About Us
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container about-container">
+        <h1 class="about-header">About This Project</h1>
+        
+        <p class="about-description">
+            This project is made for confused students who wants to clear their doubts on graphs. These tools help in plotting graphs and making graphs with just a equation, it can take multiple types of equations.
+            </p>
+
+        <h2 style="text-align: center;">Features</h2>
+
+        <div class="features-grid">
+
+            <div class="feature-tile">
+                <span class="material-symbols-outlined icon">linear_scale</span>
+                <h3>Linear Regression</h3>
+                <p>You enter your points in pairs (x, y), and it will produces a graph where all the points will be plotted with a line of best fit drawn over it.</p>
+            </div>
+
+            <div class="feature-tile">
+                <span class="material-symbols-outlined icon">show_chart</span>
+                <h3>Function Grapher <br>(y=fx) and (y = mx + c)</h3>
+                <p>Plots explicit 2D functions like y = sin(x) or y = x² and y = mx + c. Supports plotting multiple functions, calculating derivatives, and setting custom ranges.</p>
+            </div>
+
+            <div class="feature-tile">
+                <span class="material-symbols-outlined icon">polyline</span>
+                <h3>Implicit Grapher (f(x, y) = 0)</h3>
+                <p>Plots implicit 2D equations where x and y are mixed, such as x² + y² = 1. Uses a contour plot to find where the function equals zero.</p>
+            </div>
+
+        </div>
+     </div>
+</body>
+</html>
