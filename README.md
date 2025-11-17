@@ -1,6 +1,6 @@
 # line-of-best-fit
 <div align="center">
-  <img src="https://i.ibb.co/SXvRjkQn/Untitled-design-1-fotor-20251117191025.jpg" alt="Logo" width="200"/>
+  <img src="https://i.ibb.co/x85V0Rk2/Untitled-design-1-fotor-20251117191025.png" alt="Logo" width="200"/>
    
 
 
