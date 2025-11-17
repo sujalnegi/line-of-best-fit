@@ -9,21 +9,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let regressionChart;
 
-    // Add click event listener to the button
     calcButton.addEventListener('click', async () => {
         const rawData = dataInput.value;
 
-        // --- Set Loading State ---
         calcButton.disabled = true;
         calcButton.classList.add('loading');
         btnText.innerText = 'Calculating...';
         
-        // Clear previous results and errors
         resultsDisplay.innerText = '';
-        resultsDisplay.className = 'results-box'; // Resets to base class
+        resultsDisplay.className = 'results-box'; 
 
         try {
-            // Call our Flask API
+            // Call Flask API
             const response = await fetch('/calculate-regression', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -32,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const results = await response.json();
 
-            // Handle errors returned from the server
             if (!response.ok) {
                 throw new Error(results.error || 'An error occurred');
             }
@@ -42,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rSquared = results.r_squared;
 
             const sign = intercept >= 0 ? '+' : '-';
-            const interceptAbs = Math.abs(intercept); // Get the absolute value
+            const interceptAbs = Math.abs(intercept);
 
             resultsDisplay.innerText = `y = ${slope}x ${sign} ${interceptAbs} (R²: ${rSquared})`;
             resultsDisplay.classList.add('success');
@@ -61,11 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /**
-     * Parses raw data and updates the Chart.js canvas
-     */
+    
     function updateChart(rawData, regressionResults) {
-        // Parse the data again, just for the chart
+    
         const points = rawData.trim().split('\n')
             .map(line => {
                 const parts = line.split(',');
@@ -73,15 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const x = parseFloat(parts[0]);
                     const y = parseFloat(parts[1]);
                     return { x, y };
-        0
-    3        }
+                }
                 return null; 
             })
-            .filter(p => p && !isNaN(p.x) && !isNaN(p.y)); // Filter out any invalid lines
+            .filter(p => p && !isNaN(p.x) && !isNaN(p.y)); 
 
         if (points.length === 0) return;
 
-        // Find the min and max x values to draw the regression line
+        // Finds the min and max x values to draw the regression line
         const xVals = points.map(p => p.x);
         const minX = Math.min(...xVals);
         const maxX = Math.max(...xVals);
