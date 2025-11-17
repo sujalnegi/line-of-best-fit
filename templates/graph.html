@@ -13,6 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bree+Serif&family=Titan+One&family=Unbounded:wght@200..900&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bree+Serif&family=Momo+Signature&family=Momo+Trust+Display&family=Titan+One&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
 
     <style>
         body{
@@ -34,6 +35,7 @@
             text-align: center;
             color: #2c3e50;
             margin-bottom: 25px;
+            font-family: 'Unbounded', sans-serif;
         }
 
         .graph-layout{
@@ -156,6 +158,16 @@
             background-color: #2980b9;
         }
 
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            color: #eee;
+        }
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+
         #clear-graph-btn{
             background-color: #e74c3c;
         }
@@ -176,10 +188,10 @@
                     <a href="{{ url_for('home') }}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('graph') }}" class="nav-link">Graph Maker</a>
+                    <a href="{{ url_for('graph') }}" class="nav-link">Graphs</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('implicit') }}" class="nav-link">Implicit Grapher (fxy=0)</a>
+                    <a href="{{ url_for('implicit') }}" class="nav-link">Complex Graphs</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url_for('about') }}" class="nav-link">About Us</a>
@@ -189,7 +201,7 @@
     </nav>
 
     <div class="container graph-container">
-        <h2>Graph Maker</h2>
+        <h2 style="font-family: 'Momo Signature', cursive; font-size: 30px;">Graph Maker</h2>
 
         <div class="graph-layout">
 
@@ -252,6 +264,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.2/math.min.js"></script>
 
     <script src="{{ url_for('static', filename='graph.js') }}"></script>
+    
 </body>
 
 </html>
