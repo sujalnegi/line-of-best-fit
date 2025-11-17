@@ -1,6 +1,6 @@
 # line-of-best-fit
 <div align="center">
-  <img src="https://i.ibb.co/x85V0Rk2/Untitled-design-1-fotor-20251117191025.png" alt="Logo" width="200"/>
+  <img src="https://i.ibb.co/SXvRjkQn/Untitled-design-1-fotor-20251117191025.jpg" alt="Logo" width="200"/>
    
 
 
@@ -14,7 +14,14 @@
 
 line-of-best-fit is utility tool for mathematicians and physicist which helps students to Plot points in a graph and automatically plots the line of best fit. Furthermore it helps to draw graphs using multiple formats of equations.
 
-Try it here: **[Link]()** #Soon...
+Try it here: **[Link](https://lineofbestfit.pythonanywhere.com/)** 
+
+---
+
+
+## Demo 
+
+A full demo of all the functions is  **[here](https://drive.google.com/file/d/1LZCNNzGY_keZSoDigF8I25stGche1bNl/view?usp=drive_link)**
 
 ---
 
@@ -31,11 +38,6 @@ Try it here: **[Link]()** #Soon...
 
 ---
 
-## Demo 
-
-A full demo of all the functions is  **[here](https://drive.google.com/file/d/1LZCNNzGY_keZSoDigF8I25stGche1bNl/view?usp=drive_link)**
-
----
 
 ## Project Structure
 
@@ -69,7 +71,7 @@ line-of-best-fit/
 1. **Clone the repo:**
    ```bash
    git clone https://github.com/sujalnegi/line-of-best-fit.git
-   cd Ziks
+   cd line-of-best-fit
    ```
 
 2. **Create a virtual environment (recommended):**
@@ -116,7 +118,9 @@ line-of-best-fit/
 
 ---
 
-## CSS Falling Star Background
+## Acknowledgement
+
+CSS falling star background
 
 Source: [LINK](https://www.youtube.com/watch?v=aywzn9cf-_U&t=162s)
 
