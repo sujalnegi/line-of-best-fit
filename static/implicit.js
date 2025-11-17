@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         autosize: true
     };
     downloadBtn.addEventListener('click', () => {
-        // Use Plotly's built-in function to download the image
+        // Used Plotlys built-in function to download the image
         Plotly.downloadImage(graphDiv, {
             format: 'png',
             width: 1000,
@@ -99,3 +99,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     plotImplicit();
 });
+
+
