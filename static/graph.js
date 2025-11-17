@@ -25,22 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearGraphBtn = document.getElementById('clear-graph-btn');
     const downloadBtn = document.getElementById('download-btn');
 
-    // --- State ---
-    let currentMode = 'linear'; // 'linear' or 'complex'
+    let currentMode = 'linear'; // linear or complex
 
     let allTraces = [];
 
     const colors = [
-        '#3498db', // Blue
-        '#e74c3c', // Red
-        '#2ecc71', // Green
-        '#9b59b6', // Purple
-        '#f1c40f', // Yellow
-        '#1abc9c', // Teal
-        '#d35400'  // Orange
+        '#3498db', 
+        '#e74c3c', 
+        '#2ecc71', 
+        '#9b59b6', 
+        '#f1c40f', 
+        '#1abc9c', 
+        '#d35400'  
     ];
 
-    // --- Graphing Layout ---
     const baseLayout = {
         title: 'Function Plot',
         xaxis: { title: 'x', zeroline: true, gridcolor: '#eee' },
@@ -48,10 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         autosize: true,
         margin: { l: 50, r: 50, b: 50, t: 50, pad: 4 }
     };
-
-    // --- Event Listeners ---
-
-    // Switch to Linear Mode
+    
     modeLinear.addEventListener('click', () => {
         currentMode = 'linear';
         modeLinear.classList.add('active');
@@ -61,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     downloadBtn.addEventListener('click', () => {
-        // Use Plotly's built-in function to download the image
         Plotly.downloadImage(graphDiv, {
             format: 'png',      
             width: 1000,        
@@ -70,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Switch to Complex Mode
+    
     modeComplex.addEventListener('click', () => {
         currentMode = 'complex';
         modeComplex.classList.add('active');
@@ -79,47 +73,47 @@ document.addEventListener('DOMContentLoaded', () => {
         linearInputContainer.classList.add('hidden');
     });
 
-    // Main Plot Button
+    
     drawBtn.addEventListener('click', plotGraph);
 
-    // Clear Button now calls initGraph
+    
     clearGraphBtn.addEventListener('click', initGraph);
 
 
-    // --- Functions ---
+    // functions
 
-    function plotGraph() {
+    function plotGraph(){
         let newTrace = null;
-        const range = getPlotRange(); // Get user-defined range
+        const range = getPlotRange(); 
 
-        if (currentMode === 'linear') {
+        if (currentMode === 'linear'){
             newTrace = createLinearTrace(range);
-        } else {
+        } else{
             newTrace = createComplexTrace(range);
         }
 
-        if (newTrace) {
+        if (newTrace){
             newTrace.line.color = colors[allTraces.length % colors.length];
             allTraces.push(newTrace);
             
-            const newLayout = JSON.parse(JSON.stringify(baseLayout)); // Deep copy
+            const newLayout = JSON.parse(JSON.stringify(baseLayout)); 
             newLayout.xaxis.range = [range.min, range.max];
             
             Plotly.newPlot(graphDiv, allTraces, newLayout);
         }
     }
-    function getPlotRange() {
+    function getPlotRange(){
         let min = parseFloat(xMinInput.value);
         let max = parseFloat(xMaxInput.value);
 
-        if (isNaN(min)) {
+        if (isNaN(min)){
             min = -20;
         }
-        if (isNaN(max)) {
+        if (isNaN(max)){
             max = 20;
         }
 
-        if (min >= max) {
+        if (min >= max){
             alert("X-Min must be less than X-Max. Using defaults.");
             min = -20;
             max = 20;
@@ -128,11 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return { min: min, max: max };
     }
     
-    function createLinearTrace(range) { // <-- Receives range
+    function createLinearTrace(range){ 
         const m = parseFloat(mInput.value);
         const c = parseFloat(cInput.value);
 
-        if (isNaN(m) || isNaN(c)) {
+        if(isNaN(m) || isNaN(c)){
             alert("Please enter valid numbers for 'm' and 'c'.");
             return null;
         }
@@ -140,15 +134,15 @@ document.addEventListener('DOMContentLoaded', () => {
         let x_values = [];
         let y_values = [];
         const numPoints = 200;
-        const step = (range.max - range.min) / numPoints; // Use range
+        const step = (range.max - range.min) / numPoints; 
 
-        for (let i = 0; i <= numPoints; i++) {
-            let x = range.min + (step * i); // Use range.min
+        for(let i = 0; i <= numPoints; i++){
+            let x = range.min + (step * i); 
             x_values.push(x);
             y_values.push(m * x + c);
         }
 
-        return {
+        return{
             x: x_values,
             y: y_values,
             type: 'scatter',
@@ -158,30 +152,30 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    function createComplexTrace(range) { // <-- Receives range
+    function createComplexTrace(range){
         const expression = functionInput.value;
-        if (!expression) {
+        if (!expression){
             alert("Please enter a function.");
             return null;
         }
 
-        try {
+        try{
             const compiledExpr = math.compile(expression);
 
             let x_values = [];
-            const numPoints = 400; // Use more points for smooth functions
-            const step = (range.max - range.min) / numPoints; // Use range
+            const numPoints = 400; 
+            const step = (range.max - range.min) / numPoints; 
 
-            for (let i = 0; i <= numPoints; i++) {
-                let x = range.min + (step * i); // Use range.min
-                x_values.push(math.round(x, 6)); // Round to avoid float issues
+            for(let i = 0; i <= numPoints; i++){
+                let x = range.min + (step * i); 
+                x_values.push(math.round(x, 6));
             }
 
-            const y_values = x_values.map(x => {
+            const y_values = x_values.map(x =>{
                 return compiledExpr.evaluate({ x: x });
             });
 
-            return {
+            return{
                 x: x_values,
                 y: y_values,
                 type: 'scatter',
@@ -190,13 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 line: { width: 3 }
             };
 
-        } catch (err) {
+        } catch(err){
             alert("Error: Could not parse or evaluate the function.\n\n" + err.message);
             return null;
         }
     }
 
-    function initGraph() {
+    function initGraph(){
         allTraces = []; 
         Plotly.newPlot(graphDiv, allTraces, baseLayout); 
     }
