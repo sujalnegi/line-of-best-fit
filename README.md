@@ -23,6 +23,8 @@ Try it here: **[Link](https://lineofbestfit.pythonanywhere.com/)**
 
 A full demo of all the functions is  **[here](https://drive.google.com/file/d/1LZCNNzGY_keZSoDigF8I25stGche1bNl/view?usp=drive_link)**
 
+**If the Site is unreachable please try to access with a VPN or through TOR Browser as the India Servers of pythonanywhere.com under mantainance.**
+
 ---
 
 ## Features
